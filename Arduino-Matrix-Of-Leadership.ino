@@ -1,16 +1,15 @@
 #include <Arduino.h>
 
+// Declaracion de Pines
 const int ledPin = 3;
 
-void breathingEffect(int delayONSegundos = 1,int delayOFFSegundos = 1,int velocidadEncendido = 10, int velocidadApagado = 0) {  
-  // Si el valor de velocidad es negativo, se aplica la velocidad de apagado
-  if (velocidadApagado <= 0) 
-    velocidadApagado = velocidadEncendido;
-  
-  // Transforma milisegundos en segundos
-  delayONSegundos = delayONSegundos * 1000;
-  delayOFFSegundos = delayOFFSegundos * 1000;
-  
+// Variables para controlar LEDs
+int delayONSegundos     = 1;
+int delayOFFSegundos    = 1;
+int velocidadEncendido  = 10;
+int velocidadApagado    = 0;
+
+void breathingEffect() {  
   for (int ledForce = 0; ledForce < 255; ledForce++) {
     analogWrite(ledPin, ledForce);
     delay(velocidadEncendido);
@@ -28,10 +27,15 @@ void breathingEffect(int delayONSegundos = 1,int delayOFFSegundos = 1,int veloci
 void setup() {
   Serial.begin(9600);
   pinMode(ledPin, OUTPUT);
+  if (velocidadApagado <= 0)
+    velocidadApagado = velocidadEncendido;
+  
+  delayONSegundos = delayONSegundos * 1000;
+  delayOFFSegundos = delayOFFSegundos * 1000;
 }
-
+// 1
 void loop() {
-  breathingEffect(1, 10, 10);
+  breathingEffect();
 }
 
 
